@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>title</title>
+    <link rel="stylesheet" href="css/SchoolManagement.css">
+    <link rel="stylesheet" href="fonts/iconfont.css">
+    <link rel="stylesheet" href="css/tableStyle.css">
+</head>
+<body>
+<div class="container-fluid schoolFluid">
+    <div class="row">
+        <div class="col-md-12 col-xs-12"  align="left">
+            <h3 id="student">学校管理</h3>
+        </div>
+        <div class="CitySelection form-group col-md-6">
+            <label for="schoolSelector">请选择城市</label>
+            <select name="schoolOfCity" id="schoolSelector">
+                <option value="CD" data-cityId="1">成都</option>
+                <option value="MY" data-cityId="2">绵阳</option>
+                <option value="YA" data-cityId="3">雅安</option>
+                <option value="LS" data-cityId="4">乐山</option>
+                <option value="NJ" data-cityId="5">内江</option>
+            </select>
+        </div>
+        <div class="delAddBox pull-right col-md-6 pull-right text-right">
+            <button type="button" class="btn btn-success btn-sm" id="addNew" data-toggle="modal"
+                    data-target="#modalOfSchool">新增学校
+            </button>
+            <button type="button" class="btn btn-default btn-sm" id="examine">审核</button>
+            <button type="button" class="btn btn-warning btn-sm" id="ApplicationApproval">申请立项</button>
+            <button type="button" class="btn btn-danger btn-sm" id="delSelected">删除所选</button>
+            <!--<button type="button" class="btn btn-warning btn-sm" id="addSchoolActivity" data-toggle="modal"-->
+            <!--data-target="#modalOfSchoolActivity">新增学校活动-->
+            <!--</button>-->
+            <button type="button" class="btn btn-warning btn-sm" id="addSchoolActivity">新增学校活动
+            </button>
+        </div>
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered text-center" id="infBox">
+                    <thead>
+                    <tr>
+                        <th class="col-md-1">
+                            <input type="checkbox" id="selectAll"/>
+                        </th>
+                        <th class="col-md-3">学校名称</th>
+                        <th class="col-md-2">校长</th>
+                        <th class="col-md-2">录入时间</th>
+                        <th class="col-md-2">状态</th>
+                        <th class="col-md-2">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="schoolInf">
+                    <!--<tr>-->
+                    <!--<td class="hidden">0</td>-->
+                    <!--<td><input type="checkbox"/></td>-->
+                    <!--<td>学校名称</td>-->
+                    <!--<td>校长</td>-->
+                    <!--<td>录入时间</td>-->
+                    <!--<td>状态</td>-->
+                    <!--<td>-->
+                    <!--<button class="btn btn-danger btn-sm" id="delInf">删除</button>-->
+                    <!--<button class="btn btn-primary btn-sm" id="upDataInf">编辑</button>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="switcher col-md-12">
+            <nav aria-label="Page navigation" class="ul-center">
+                <ul class="pagination" style="position: relative;transform: translateX(-50%);left: 50%;">
+                    <li id="pagePrevious">
+                    <span aria-label="Previous">
+                         <span aria-hidden="true">&laquo;</span>
+                    </span>
+                    </li>
+
+                    <li id="pageNext">
+                    <span aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="modal fade" id="modalOfSchool" tabindex="-1" role="dialog"
+         aria-labelledby="#modalOfSchool">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-center" id="modalOfSchoolLabel"></h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <form>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="hidden" id="message-schId">
+                            <div class="form-group">
+                                <label for="message-schName" class="control-label">学校名称</label>
+                                <input type="text" class="form-control" id="message-schName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schTel" class="control-label">联系电话</label>
+                                <input type="text" class="form-control" id="message-schTel">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-cityName" class="control-label">所属城市</label>
+                                <input type="text" class="form-control" id="message-cityName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schEntryTime" class="control-label">申请立项时间</label>
+                                <input type="text" class="form-control" id="message-schEntryTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schChargePerson" class="control-label">负责人</label>
+                                <input type="text" class="form-control" id="message-schChargePerson" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schTeacherNum" class="control-label">老师人数</label>
+                                <input type="text" class="form-control" id="message-schTeacherNum" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schWB" class="control-label">带宽流量</label>
+                                <input type="text" class="form-control" id="message-schWB" required>
+                            </div>
+
+                        </div>
+                        <div class=" col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <label for="message-schMaster" class="control-label">校长</label>
+                                <input type="text" class="form-control" id="message-schMaster">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schIP" class="control-label">IP 地址</label>
+                                <input type="text" class="form-control" id="message-schIP">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schState" class="control-label">状态</label>
+                                <input type="text" class="form-control" id="message-schState">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schApplyAgreeTime" class="control-label">立项批准时间</label>
+                                <input type="text" class="form-control" id="message-schApplyAgreeTime">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schChargeDepot" class="control-label">负责部门</label>
+                                <input type="text" class="form-control" id="message-schChargeDepot">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schStudentsNum" class="control-label">学生人数</label>
+                                <input type="text" class="form-control" id="message-schStudentsNum">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schApplyTime" class="control-label">录入时间</label>
+                                <input type="text" class="form-control" id="message-schApplyTime">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 longInput">
+                            <div class="form-group ">
+                                <label for="message-schAddress" class="control-label">学校地址</label>
+                                <input type="text" class="form-control" id="message-schAddress">
+                            </div>
+                            <div class="form-group ">
+                                <label for="message-schDescribe" class="control-label">说明</label>
+                                <input type="text" class="form-control" id="message-schDescribe">
+                            </div>
+                            <div class="form-group ">
+                                <label for="message-schApplyOpinion" class="control-label">审批意见</label>
+                                <input type="text" class="form-control" id="message-schApplyOpinion">
+                            </div>
+                        </div>
+                    </form>
+                    <!--<div class="modal-getMore text-center">-->
+                    <!--<button type="button" class="btn btn-primary" id="getMoreSchoolInf">查看详细信息 <span-->
+                    <!--class="iconfont icon-detail-add"></span></button>-->
+                    <!--</div>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="ComRecord">沟通记录</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="Approval">批准立项</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="Reject">驳回立项</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="submitInf">确认修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalOfSchoolActivity" tabindex="-1" role="dialog"
+         aria-labelledby="#modalOfSchoolActivity">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-center" id="schCRTimeTitle">添加沟通记录</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="clearfix">
+                        <div class="hidden"><span id="schId"></span> <span id="schCRId"></span></div>
+                        <div class="form-group">
+                            <label for="schCRTime" class="control-label">沟通时间</label>
+                            <input type="date" class="form-control" id="schCRTime"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="schCRContacts" class="control-label">校方联系人</label>
+                            <input type="text" class="form-control" id="schCRContacts"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="schCRComuPerson" class="control-label">职务</label>
+                            <input type="text" class="form-control" id="schCRComuPerson"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="schCRWork" class="control-label">联系人</label>
+                            <select name="schCRWork" id="schCRWork" class="form-control">
+                                <option value="周向明">周向明</option>
+                                <option value="刘世河">刘世河</option>
+                                <option value="张晓雯">张晓雯</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="schCRContent" class="control-label">内容</label>
+                            <textarea name="schCRContent" class="form-control" id="schCRContent" cols="30"
+                                      rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="schActivityAdd">添加
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="schActivityCancel">
+                        取消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/SchoolManagement.js"></script>
+</body>
+</html>

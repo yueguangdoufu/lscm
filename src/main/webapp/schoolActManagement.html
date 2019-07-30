@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>title</title>
+    <link rel="stylesheet" href="css/schoolActManagement.css">
+    <link rel="stylesheet" href="fonts/iconfont.css"/>
+    <link rel="stylesheet" href="css/tableStyle.css">
+</head>
+<body>
+<header class="title">
+    <div align="left" style="padding-left: 15px">
+        <h3>学校活动</h3>
+    </div>
+</header>
+<div class="container-fluid content">
+    <div class="CitySelection form-group">
+        <label for="schoolSelector">请选择城市</label>
+        <select name="schoolOfCity" id="schoolSelector">
+            <option value="1" data-cityId="1">成都</option>
+            <option value="2" data-cityId="2">绵阳</option>
+            <option value="3" data-cityId="3">雅安</option>
+            <option value="4" data-cityId="4">乐山</option>
+            <option value="5" data-cityId="5">内江</option>
+        </select>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered text-center" id="infBox">
+            <thead>
+            <tr>
+                <th class="col-md-2">学校信息</th>
+                <th class="col-md-2">校长</th>
+                <th class="col-md-2">录入时间</th>
+                <th class="col-md-2">联系电话</th>
+                <th class="col-md-3">操作</th>
+            </tr>
+            </thead>
+            <tbody id="schoolInf">
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="modalOfSchool" tabindex="-1" role="dialog"
+         aria-labelledby="#modalOfSchool">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-center" id="modalOfSchoolLabel">xxx</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <form>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="hidden" id="message-schId">
+                            <div class="form-group">
+                                <label for="message-schName" class="control-label">活动名称</label>
+                                <input type="text" class="form-control" id="message-schName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schTel" class="control-label">活动时间</label>
+                                <input type="text" class="form-control" id="message-schTel">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-cityName" class="control-label">活动地点</label>
+                                <input type="text" class="form-control" id="message-cityName" required>
+                            </div>
+                        </div>
+                        <div class=" col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <label for="message-schChargePerson" class="control-label">负责人</label>
+                                <input type="text" class="form-control" id="message-schChargePerson" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schChargeDepot" class="control-label">负责部门</label>
+                                <input type="text" class="form-control" id="message-schChargeDepot">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-actDetailTitle" class="control-label">主题</label>
+                                <input type="text" class="form-control" id="message-actDetailTitle">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="submitInf">确认添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 查看显示的模态框-->
+    <div class="modal fade " id="modalLookActive" tabindex="-1" role="dialog"
+         aria-labelledby="#modalLookActive">
+        <div class="modal-dialog container" style="width: 600px!important;" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-center" id="look">活动记录一览</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover table-bordered table-striped text-center" id="box">
+                        <thead>
+                        <tr>
+                            <th class="">活动名称</th>
+                            <th class="">活动时间</th>
+                            <th class="">活动地点</th>
+                            <th class="">主题</th>
+                            <th class="">负责部门</th>
+                            <th class="">负责人</th>
+                        </tr>
+                        </thead>
+                        <tbody id="lookActive">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="yes">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 添加模态框-->
+    <div class="modal fade" id="modalalter" tabindex="-1" role="dialog"
+         aria-labelledby="#modalalter">
+        <div class="modal-dialog addModal" role="document">
+            <div class="modal-content" style="width: 800px !important;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-center" id="modalalterLabel">添加活动</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <form>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" class="hidden" id="alter-schId">
+                            <div class="form-group">
+                                <label for="message-schName" class="control-label">活动名称</label>
+                                <input type="text" class="form-control" id="alter-schName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schTel" class="control-label">活动时间</label>
+                                <input type="text" class="form-control" id="alter-schTel">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-cityName" class="control-label">活动地点</label>
+                                <input type="text" class="form-control" id="alter-cityName" required>
+                            </div>
+                        </div>
+                        <div class=" col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <label for="message-schChargePerson" class="control-label">负责人</label>
+                                <input type="text" class="form-control" id="alter-schChargePerson" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-schChargeDepot" class="control-label">负责部门</label>
+                                <input type="text" class="form-control" id="alter-schChargeDepot">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-actDetailTitle" class="control-label">主题</label>
+                                <input type="text" class="form-control" id="alter-actDetailTitle">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="ok">确认添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--翻页-->
+<div class="text-center" style="padding: 0 0 30px 0">
+    <nav aria-label="Page navigation" class="ul-center" text-aline="center">
+        <ul class="pagination">
+            <li id="pagePrevious">
+            <span aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </span>
+            </li>
+            <li>
+                <span>1</span>
+            </li>
+            <li id="pageNext">
+            <span aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </span>
+            </li>
+        </ul>
+    </nav>
+</div>
+<script src="js/school-activity.js"></script>
+</body>
+</html>

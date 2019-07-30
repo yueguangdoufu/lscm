@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+    <meta name="viewport" content=" width=device-width, initial-scale=1">
+    <title></title>
+    <!--<link rel="stylesheet" href="css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="css/studentManagement.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <!-- 城市-->
+        <div class="col-md-2 col-sm-3 col-lg-2">
+        <ul id="cityNav">
+            <li><span><span class='iconfont icon-ziliaoguanli-'></span>成都市<span class="iconfont icon-down "></span></span>
+                <ul class="menu"></ul>
+            </li>
+            <li><span><span class='iconfont icon-xuexiao'></span>绵阳市<span class="iconfont icon-down"></span></span>
+                <ul class="menu">
+                </ul>
+            </li>
+            <li><span><span class='iconfont icon-yonghu'></span>乐山市<span class="iconfont icon-down"></span></span>
+                <ul class="menu">
+                </ul>
+            </li>
+            <li><span><span class='iconfont icon-tongji'></span>内江市<span class="iconfont icon-down"></span></span>
+                <ul class="menu">
+                </ul>
+            </li>
+        </ul>
+        </div>
+        <div id="studentManagement" class="col-md-10 col-sm-9 col-lg-10">
+            <!--表格列表-->
+            <div class="table-responsive">
+                <table class="table table-bordered text-center"  width="100%" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr id="classTitle">
+                            <td colspan="7">
+                                <!--标题-->
+                                <div class="col-md-12 col-xs-12"  align="left">
+                                    <h3 id="student">成都外国语学校学生一览</h3>
+                                </div>
+                                <div>
+                                    <div class="search col-md-3 col-sm-4 col-xs-3">
+                                        <select class="form-control search-select" id="search-type">
+                                            <option value="1">学生姓名</option>
+                                            <option value="2">班级</option>
+                                            <option value="3">会员</option>
+                                            <option value="4">非会员</option>
+                                        </select>
+                                        <div class="input-group">
+                                        <input type="text" class="form-control" id="search-input" placeholder="Search for...">
+                                        <span id="search-btn" class="input-group-btn"><button class="btn btn-default" type="button">查找</button></span>
+                                    </div>
+                                    </div>
+                                    <div class="delAddBox col-md-2 col-md-offset-7 col-sm-3 col-sm-offset-5 col-xs-4 col-xs-offset-5 text-right">
+                                        <button type="button" class="btn  btn-sm" id="addNew1" data-toggle="modal" data-target="#exampleModal">新增</button>
+                                        <button type="button" class="btn  btn-sm" id="delSelected">删除</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-1">
+                                <input type="checkbox" id="selectAll"/>
+                            </td>
+                            <td class="col-md-2">学生姓名</td>
+                            <td class="col-md-1">性别</td>
+                            <td class="col-md-2">班级</td>
+                            <td class="col-md-2">状态</td>
+                            <td class="col-md-2">联系方式</td>
+                            <td class="col-md-2">操作</td>
+                        </tr>
+                    </thead>
+                    <!--列表信息栏-->
+                    <tbody id="studentManagementTbody">
+                    </tbody>
+                </table>
+                <!--底部操作区-->
+                <div class="switcher text-center">
+                    <!--页码-->
+                    <nav aria-label="Page navigation" class="ul-center">
+                        <ul class="pagination">
+                            <li id="pagePrevious"><span aria-label="Previous"><span  aria-hidden="true"></span></span></li>
+                            <li id="pageNext"><span aria-label="Next"><span  aria-hidden="true"></span></span></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        <!--修改添加模态框-->
+        <div class="modal fade hideModeTab" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!--关闭-->
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="exampleModalLabel">编辑信息</h4>
+                        </div>
+                        <div class="modal-body clearfix">
+                            <form>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" class="hidden" id="message-stuId">
+                                    <input type="text" class="hidden" id="message-stuId-search">
+                                    <div class="form-group">
+                                        <label for="message-stuName" class="control-label">学生姓名</label>
+                                        <input type="text" class="form-control" id="message-stuName" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-stuBirth" class="control-label">出生日期</label>
+                                        <input type="text" class="form-control" id="message-stuBirth" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-stuAddress" class="control-label">家庭住址</label>
+                                        <input type="text" class="form-control" id="message-stuAddress" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-stuFather" class="control-label">父亲</label>
+                                        <input type="text" class="form-control" id="message-stuFather" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-stuMother" class="control-label">母亲</label>
+                                        <input type="text" class="form-control" id="message-stuMother" required>
+                                    </div>
+                                </div>
+                                <div class=" col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="message-stuSex" class="control-label">性别</label>
+                                        <input type="text" class="form-control" id="message-stuSex" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-className" class="control-label">所属班级</label>
+                                        <select class="form-control" id="message-className">
+                                            <option value="网脉一班">网脉一班</option>
+                                            <option value="网脉二班">网脉二班</option>
+                                            <option value="网脉三班">网脉三班</option>
+                                            <!--<option value="网脉四班">网脉四班</option>-->
+                                            <!--<option value="网脉五班">网脉五班</option>-->
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-stuTel" class="control-label">联系电话</label>
+                                        <input type="text" class="form-control" id="message-stuTel" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-stuFatherTel" class="control-label">父亲电话</label>
+                                        <input type="text" class="form-control" id="message-stuFatherTel" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-stuMotherTel" class="control-label">母亲电话</label>
+                                        <input type="text" class="form-control" id="message-stuMotherTel" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 longInput">
+                                    <div class="form-group">
+                                        <label for="message-stuVIPState" class="control-label">学生状态</label>
+                                        <input type="text" class="form-control" id="message-stuVIPState" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-stuRemarks" class="control-label">备注</label>
+                                        <input type="text" class="form-control" id="message-stuRemarks" required>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="submitInf">确认修改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!--查看模态框-->
+        <div class="modal fade hideModeTab" id="exampleModal-Read" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-Read">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!--关闭-->
+                            <button type="button" class="close thatIsOk" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="exampleModalLabel-Read">查看信息</h4>
+                        </div>
+                        <div class="modal-body clearfix">
+                            <form>
+                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                    <input type="text" class="hidden" id="message-stuId-Read">
+                                    <div class="form-group">
+                                        <label for="message-stuName-Read" class="control-label">学生姓名</label>
+                                        <input type="text" class="form-control" id="message-stuName-Read" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="message-stuAddress-Read" class="control-label">家庭住址</label>
+                                        <input type="text" class="form-control" id="message-stuAddress-Read" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-stuFather-Read" class="control-label">父亲</label>
+                                        <input type="text" class="form-control" id="message-stuFather-Read" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-stuMother-Read" class="control-label">母亲</label>
+                                        <input type="text" class="form-control" id="message-stuMother-Read" required>
+                                    </div>
+                                </div>
+                                <div class=" col-md-4 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="message-stuSex-Read" class="control-label">性别</label>
+                                        <input type="text" class="form-control" id="message-stuSex-Read" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-className-Read" class="control-label">所属班级</label>
+                                        <input type="text" class="form-control" id="message-className-Read" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="message-stuFatherTel-Read" class="control-label">父亲电话</label>
+                                        <input type="text" class="form-control" id="message-stuFatherTel-Read" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-stuMotherTel-Read" class="control-label">母亲电话</label><input type="text" class="form-control" id="message-stuMotherTel-Read" required>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12 longInput">
+                                    <div class="form-group">
+                                        <label for="message-stuBirth-Read" class="control-label">出生日期</label>
+                                        <input type="text" class="form-control" id="message-stuBirth-Read" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-stuTel-Read" class="control-label">联系电话</label>
+                                        <input type="text" class="form-control" id="message-stuTel-Read" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-stuVIPState-Read" class="control-label">学生状态</label>
+                                        <input type="text" class="form-control" id="message-stuVIPState-Read" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 longInput">
+                                    <div class="form-group">
+                                        <label for="message-stuRemarks-Read" class="control-label">备注</label>
+                                        <input type="text" class="form-control" id="message-stuRemarks-Read" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-Record" class="control-label">回访记录</label>
+                                        <!--<input type="text" class="form-control" id="message-Record" required>-->
+                                        <table type="text" class="form-control table table-bordered text-center tableRecord" id="message-Record" required>
+                                            <thead>
+                                            <tr>
+                                                <td >回访时间</td>
+                                                <td >负责人</td>
+                                                <td >回访人</td>
+                                                <td >回访主题</td>
+                                                <td>回访内容</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="studentRecordTbody">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default thatIsOk" data-dismiss="modal">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!--添加回访记录模态框 -->
+        <div class="modal fade hideModeTab" id="exampleModal-Record" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-Record">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--关闭-->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="exampleModalLabel-Record">添加回访记录</h4>
+                    </div>
+                    <div class="modal-body clearfix">
+                        <form>
+                            <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                                <input type="text" class="hidden" id="message-stuId-Record">
+                                <div class="form-group">
+                                    <label for="message-stuRVRTime-Record" class="control-label">回访时间</label>
+                                    <input type="text" class="form-control" id="message-stuRVRTime-Record" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-stuRVRCharge-Record" class="control-label">负责人</label>
+                                    <select class="form-control" id="message-stuRVRCharge-Record">
+                                        <option value="张三">张三</option>
+                                        <option value="张2">张2</option>
+                                        <option value="张3">张3</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-stuRVRparson-Record" class="control-label">回访人</label>
+                                    <input type="text" class="form-control" id="message-stuRVRparson-Record" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-stuRVRTitle-Record" class="control-label">回访主题</label>
+                                    <input type="text" class="form-control" id="message-stuRVRTitle-Record" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-stuRVRContent-Record" class="control-label">回访内容</label>
+                                    <input type="text" class="form-control" id="message-stuRVRContent-Record" required>
+                                </div>
+
+                            <!--</div>-->
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="submitRecord">确认</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--确认删除模态框-->
+        <div class="modal fade hideModeTab" id="exampleModal-del" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-del">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--关闭-->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="exampleModalLabel-del">&nbsp;&nbsp;&nbsp;确认删除？</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="text" class="hidden" id="message-classId-del">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="submitInf-del">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/student.js"></script>
+</body>
+</html>

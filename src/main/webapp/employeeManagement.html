@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/employeeManagement.css">
+    <link rel="stylesheet" href="css/tableStyle.css">
+</head>
+<body class="content_background">
+<!--<div class="main-content content_opacity">-->
+    <!--<div class="main-content" style="overflow: hidden">-->
+        <!--<div class="row main-content">-->
+            <!--<div class="col-sm-12">-->
+                <!--<ol class="breadcrumb content_nav_backgroundColor">-->
+                    <!--<li class="theme">资料管理</li>-->
+                    <!--<li class="active content_fontColor">员工管理</li>-->
+                    <!--<li class="search-box"></li>-->
+                <!--</ol>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<div class="container-fluid content_opacity">
+    <div class="page-header content_border_none container">
+        <h3 id="employeeLogo" class="content_fontColor">员工管理</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default content_border_none">
+                <div class="panel-heading content_nav_backgroundColor container-fluid">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+                            <div class="form-group" style="position: absolute;">
+                                <select id="lookSelect" class="form-control content_fontColor">
+                                    <option value="1" selected="selected">所有员工</option>
+                                    <option value="2">员工姓名</option>
+                                    <option value="3">所属部门</option>
+                                    <option value="4">文化程度</option>
+                                    <option value="5">工作职位</option>
+                                </select>
+                            </div>
+                            <div class="input-group" style="position: absolute;left: 130px;top: 5px;">
+                                <input id="lookInput" type="text" class="form-control content_fontColor" placeholder="请输入...">
+                                <span class="input-group-btn">
+                                    <button id="lookUp" class="btn btn-default content_fontColor" type="button">Go!</button>
+                                </span>
+                            </div><!-- /input-group -->
+                        </div><!-- /.col-lg-6 -->
+                        <div class="col-lg-2  col-md-2  col-sm-4 col-xs-6 col-xs form-group" style="float: right;margin-right: -40px">
+                            <button id="addEmployee" class="btn content_fontColor" type="button">添加</button>
+                            <button id="delEmployee" class="btn content_fontColor" type="button">删除</button>
+                        </div>
+                    </div><!-- /.row -->
+                </div>
+                <div class="panel-body content_table_background table-responsive content_font" style="display: block">
+                    <table class="table  content_table_background">
+                        <thead class="content_fontColor">
+                        <tr>
+                            <th><input id="selectAll" type="checkbox"></th>
+                            <th class="hidden">id</th>
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>出生日期</th>
+                            <th>文化程度</th>
+                            <th>联系方式</th>
+                            <th>所在部门</th>
+                            <th>工作职位</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="employeeTable" class="content_fontColor">
+                        </tbody>
+                    </table>
+                    <div aria-label="Page navigation" class="page">
+                        <div id="btn-page">
+                            <button id="pre" class="btn pageBtn btn-default page"><a href="javascript:void (0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></button>
+                            <div id="employeeTablePage"></div>
+                            <button id="next" class="btn pageBtn btn-default page"><a href="javascript:void (0)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--以下模态框-->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel">员工信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div  class="col-md-5 col-xs-4"><p>姓名：<span id="name"></span></p></div>
+                    <div class="col-md-5 col-xs-4"><p>性别：<span  id="sex"></span></p></div>
+                </div>
+                <div class="row">
+                    <div  class="col-md-5 col-xs-6"><p>出生日期：<span id="date"></span></p></div>
+                    <div  class="col-md-5 col-xs-6"><p>文化程度：<span id="education"></span></p></div>
+                </div>
+                <div class="row">
+                    <div  class="col-md-5 col-xs-6"><p>所属专业：<span id="major"></span></p></div>
+                    <div  class="col-md-5 col-xs-6"><p>联系电话：<span id="phone"></span></p></div>
+                </div>
+                <div class="row">
+                    <div  class="col-md-5 col-xs-6"><p>家庭地址：<span id="address"></span></p></div>
+                    <div  class="col-md-5 col-xs-6"><p>政治面貌：<span id="political"></span></p></div>
+                </div>
+                <div class="row">
+                    <div  class="col-md-5 col-xs-6"><p>所在部门：<span id="department"></span></p></div>
+                    <div  class="col-md-5 col-xs-6"><p>工作职位：<span id="position"></span></p></div>
+                </div>
+                <div class="row">
+                    <div  class="col-md-4 col-xs-6"><p>入职时间：<span id="entryTime"></span></p></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="add" class="btn btn-primary hidden" data-dismiss="modal">添加</button>
+                <button type="button" id="save" class="btn btn-primary hidden" data-dismiss="modal">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--删除确定模态框-->
+<div class="modal fade" id="delModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body" style="text-align: center">
+                <h4 >确定删除吗？</h4>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="isDel">确定</button>
+                <button type="button" class="btn btn-primary">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script src="js/jquery_3.1.1.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/employee.js"></script>
+</body>
+</html>

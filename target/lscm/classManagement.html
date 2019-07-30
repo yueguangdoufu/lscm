@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+    <meta name="viewport" content=" width=device-width, initial-scale=1">
+    <title></title>
+    <!--<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.css">-->
+    <link rel="stylesheet" href="css/classManagement.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+</head>
+<body>
+<div class="container-fluid">
+<div class="row">
+    <!-- 城市-->
+    <div class="col-md-2 col-sm-3 col-lg-2">
+        <ul id="cityNav">
+            <li><span><span class='iconfont icon-ziliaoguanli-'></span>成都市<span class="iconfont icon-down "></span></span>
+                <ul class="menu"></ul>
+            </li>
+            <li><span><span class='iconfont icon-xuexiao'></span>绵阳市<span class="iconfont icon-down"></span></span>
+                <ul class="menu">
+                </ul>
+            </li>
+            <li><span><span class='iconfont icon-yonghu'></span>乐山市<span class="iconfont icon-down"></span></span>
+                <ul class="menu">
+                </ul>
+            </li>
+            <li><span><span class='iconfont icon-tongji'></span>内江市<span class="iconfont icon-down"></span></span>
+                <ul class="menu">
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="classManagement" class="col-md-10 col-sm-9 col-lg-10">
+            <!--表格列表-->
+            <div class="table-responsive">
+                <table class="table table-bordered text-center"  width="100%" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <!--表单头顶-->
+                        <tr id="classTitle">
+                            <td colspan="6">
+                                <!--标题-->
+                                <div class="col-md-12 col-xs-12" align="left">
+                                    <h3>班级一览</h3>
+                                </div>
+                                <!--筛选下拉及操作按钮-->
+                                <div>
+                                    <div class="search col-md-3 col-sm-4 col-xs-3">
+                                        <select class="form-control search-select" id="search-type">
+                                            <option value="1">所有信息</option>
+                                            <option value="2">班级名称</option>
+                                            <option value="3">带班老师</option>
+                                        </select>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="search-input" placeholder="Search for...">
+                                            <span id="search-btn" class="input-group-btn"><button class="btn btn-default" type="button">查找</button></span>
+                                        </div>
+                                    </div>
+                                    <div class="delAddBox col-md-2 col-md-offset-7 col-sm-3 col-sm-offset-5 col-xs-4 col-xs-offset-5 text-right" >
+                                        <button type="button" class="btn  btn-sm" id="addNew1" data-toggle="modal" data-target="#exampleModal">新增</button>
+                                        <button type="button" class="btn  btn-sm" id="delSelected">删除</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-1">
+                                <input type="checkbox" id="selectAll"/>
+                            </td>
+                            <td class="col-md-3">班级名称</td>    <!--td是指单元格-->
+                            <td class="col-md-2">开班时间</td>
+                            <td class="col-md-2">班级人数</td>
+                            <td class="col-md-2">带班老师</td>
+                            <td class="col-md-2">操作</td>
+                        </tr>
+                    </thead>
+                    <!--列表信息栏-->
+                    <tbody id="classManagementTbody"></tbody>
+                </table>
+                <!--底部操作区-->
+                <div class="switcher text-center">
+                    <!--页码-->
+                    <nav aria-label="Page navigation" class="ul-center" >
+                        <ul class="pagination">
+                            <li id="pagePrevious"><span aria-label="Previous"><span aria-hidden="true"></span></span></li>
+                            <li id="pageNext"><span aria-label="Next"><span aria-hidden="true"></span></span></li>
+                        </ul>
+                    </nav>
+                </div>
+        </div>
+            <!--模态框-->
+            <div class="modal fade hideModeTab" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!--关闭-->
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="exampleModalLabel">编辑信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <input type="text" class="hidden" id="message-classId">
+                                <input type="text" class="hidden" id="message-classId-search">
+                                <div class="form-group">
+                                    <label for="message-className" class="control-label">班级名称</label>
+                                    <input type="text" class="form-control" id="message-className" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-headTeacher" class="control-label">带班老师</label>
+                                    <input type="text" class="form-control" id="message-headTeacher" required>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="submitInf">确认修改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--确认删除模态框-->
+            <div class="modal fade hideModeTab" id="exampleModal-del" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-del">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--关闭-->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="exampleModalLabel-del">&nbsp;&nbsp;&nbsp;确认删除？</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="text" class="hidden" id="message-classId-del">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="submitInf-del">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/class.js"></script>
+</body>
+</html>

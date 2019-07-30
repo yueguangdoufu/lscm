@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="fonts/iconfont.css">
+    <link rel="stylesheet" href="css/positionManagement.css">
+</head>
+<body>
+<!--表格-->
+<div class="bgcolor">
+    <div class="table-responsive">
+        <table class="table text-center" id="infBox" width="100%" cellpadding="0" cellspacing="0" style="background-color: white">
+            <caption style="height: 110px;text-align: left;padding-left: 30px"><h3>职位管理</h3></caption>
+            <thead>
+            <tr class="hoverColor" style="border-bottom:2px solid rgb(221,221,221);">
+                <td class="col-md-1"><input type="checkbox" id="checkAll"/></td>
+                <td class="col-md-1">职位名称</td>
+                <td class="col-md-2">职位描述</td>
+                <td class="col-md-1">查询权限</td>
+                <td class="col-md-1">考核权限</td>
+                <td class="col-md-2">销售统计查询</td>
+                <td class="col-md-1">权限管理</td>
+                <td class="col-md-1">后台管理</td>
+                <td class="col-md-2">操作</td>
+            </tr>
+            </thead>
+            <tbody id="userTable">
+            </tbody>
+        </table>
+    </div>
+    <!--修改模态框-->
+    <div class="modal fade hideModeTab" id="addUser" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel" style="color: black">更改信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group workNamep">
+                            <label for="workName" class="control-label workNamep" style="color: black">职位名称</label>
+                            <!--<input type="checkbox" class="form-control" id="workName" >-->
+                            <select name="selectAge" id="workName">
+                                <option value="1">秘书长</option>
+                                <option value="2">经理</option>
+                                <option value="3">助理</option>
+                                <option value="3">职员</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" >
+                            <label for="txtDescribe" class="control-label">职位描述</label>
+                              <textarea  type="text" id="txtDescribe" class="form-control" required>
+                                </textarea>
+                        </div>
+                        <div class="position">
+                        <div class="form-group changePos">
+                            <input type="checkbox" id="txtSearch" required>
+                            <label for="txtSearch" class="control-label">查询权限</label>
+                        </div>
+                        <div class="form-group changePos">
+                            <input type="checkbox" id="txtAssessment" class="choose" required>
+                            <label for="txtAssessment" class="control-label">考核权限</label>
+
+                        </div>
+                        <div class="form-group changePos">
+                            <input type="checkbox" id="txtSales" required>
+                            <label for="txtSales" class="control-label">销售统计查询</label>
+                        </div>
+                        <div class="form-group changePos">
+                            <input type="checkbox" id="txtPrivilege" required>
+                            <label for="txtPrivilege" class="control-label">权限管理</label>
+                        </div>
+                        <div class="form-group changePos">
+                            <input type="checkbox" id="txtBackstage" required>
+                            <label for="txtBackstage" class="control-label">后台管理</label>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="btnCancel" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary " data-dismiss="modal" id="btnAdd">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade hideModeTab" id="addUser1" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel1">更改信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group workNamep">
+                            <label for="workName1" class="control-label workNamep">职位名称</label>
+                            <!--<input type="checkbox" class="form-control" id="workName" >-->
+                            <select name="selectAge" id="workName1">
+                                <option value="1">秘书长</option>
+                                <option value="2">经理</option>
+                                <option value="3">助理</option>
+                                <option value="3">职员</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="txtDescribe1" class="control-label">职位描述</label>
+                            <textarea  type="text" id="txtDescribe1" class="form-control" required>
+                                </textarea>
+                        </div>
+                        <div class="position">
+                        <div class="form-group changePos">
+                            <input type="checkbox" id="txtSearch1" required>
+                            <label for="txtSearch" class="control-label">查询权限</label>
+                        </div>
+                        <div class="form-group changePos">
+                            <input type="checkbox" id="txtAssessment1" class="choose" required>
+                            <label for="txtAssessment" class="control-label">考核权限</label>
+
+                        </div>
+                        <div class="form-group changePos">
+                            <input type="checkbox" id="txtSales1" required>
+                            <label for="txtSales" class="control-label">销售统计查询</label>
+                        </div>
+                        <div class="form-group changePos">
+                            <input type="checkbox" id="txtPrivilege1" required>
+                            <label for="txtPrivilege" class="control-label">权限管理</label>
+                        </div>
+                        <div class="form-group changePos">
+                            <input type="checkbox" id="txtBackstage1" required>
+                            <label for="txtBackstage" class="control-label">后台管理</label>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="btnCancel1" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary " data-dismiss="modal" id="btnAdd1">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--分页-->
+    <nav aria-label="Page navigation" class="ul-center text-center centerb">
+        <ul class="pagination ">
+            <li id="pagePrevious" title="">
+            <span aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </span>
+            </li>
+            <div id="divPage" style="float: left"></div>
+            <li id="pageNext" title="">
+            <span aria-label="Next">
+              <span aria-hidden="true" id="toopTitle">&raquo;</span>
+            </span>
+            </li>
+        </ul>
+    </nav>
+</div>
+<!--添加按钮/删除按钮-->
+<div class="topBtnT">
+    <button type="button" class="btn btn-success btn-sm" id="btnAddForm" data-toggle="modal"
+            data-target="#exampleModal"
+            style="background-color: rgb(223,149,48);color: white;border: none;outline: none">添加
+    </button>
+</div>
+<div class="topBtnS">
+    <button type="button" class="btn btn-success btn-sm " id="btnDelall"
+            style="background-color: rgb(227,84,84);color: white;border: none;outline: none">删除
+    </button>
+</div>
+<script src="js/positionManagement.js"></script>
+</body>
+</html>

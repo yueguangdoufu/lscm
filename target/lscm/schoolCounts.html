@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="text/html" charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style1.css">
+    <link rel="stylesheet" href="css/tableStyle.css">
+    <title></title>
+</head>
+<body>
+<!--左侧菜单-->
+        <div class="container-fluid">
+            <div class="col-md-12 col-xs-12" align="left">
+                <h3>学校统计</h3>
+            </div>
+            <div class="row" style="padding: 15px 30px 0">
+            <div id="main1" style="height: 350px; width: 100%;"></div>
+            <div class="dropdowns" style="margin-top: 15px">
+                <span class="notice">请选择城市：</span>
+                <select id="selectCity"></select>
+            </div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="font-size: 12px;padding: 5px 10px">
+                按录入时间查询
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel1">请输入时间</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" placeholder="请输入起始日期"><span class="mention">时间格式为20xx-xx-xx</span>
+                            <br><br>
+                            <input type="text" placeholder="请输入结束日期"><span class="mention">时间格式为20xx-xx-xx</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="font-size: 12px;padding: 5px 10px">
+                按录入时间查询
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">请输入时间</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" placeholder="请输入起始日期"><span class="mention">时间格式为20xx-xx-xx</span>
+                            <br><br>
+                            <input type="text" placeholder="请输入结束日期"><span class="mention">时间格式为20xx-xx-xx</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" >
+                <div class="panel-heading" style="background: #fff;height:36px;line-height: 36px ;padding: 0 15px;">
+                    学校统计
+                    <!--<div class="panel-tools">-->
+                        <!--<a class="btn btn-xs btn-link panel-collapse collapses" href="#">-->
+                        <!--</a>-->
+                        <!--<a class="btn btn-xs btn-link panel-config" href="#" data-toggle="modal">-->
+                            <!--<i class="fa fa-wrench"></i>-->
+                        <!--</a>-->
+                        <!--<a class="btn btn-xs btn-link panel-refresh" href="#">-->
+                            <!--<i class="fa fa-refresh"></i>-->
+                        <!--</a>-->
+                        <!--<a class="btn btn-xs btn-link panel-close" href="#">-->
+                            <!--<i class="fa fa-times"></i>-->
+                        <!--</a>-->
+                    <!--</div>-->
+                </div>
+                <table class="table table-bordered  table-hover table-responsive text-center">
+            <thead>
+            <tr>
+                <th>学校名称</th>
+                <th>网脉班级数量</th>
+                <th>会员数量</th>
+                <th>非会员数量</th>
+            </tr>
+            </thead>
+            <tbody id="tbody1">
+            </tbody>
+        </table>
+            </div>
+
+        </div>
+    </div>
+<script src="js/jquery_3.1.1.js"></script>
+<script src="js/echarts.js"></script>
+<script type="text/javascript">
+    //下拉框城市录入
+    CityInforPutIn();
+    function CityInforPutIn(){
+        let DropdoownBox = $("#selectCity");
+        for(let i=0;i<cityArray.length;i++){
+            DropdoownBox.append(`
+            <option value="${cityArray[i].cityId}" class="cities">
+            ${cityArray[i].cityName}
+            </option>`)
+        }
+        $(".cities").css("font-size","18px")
+    }
+    //图表
+    var myChart1 = echarts.init(document.getElementById("main1"));
+    setTimeout(function () {
+        option = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+                dimensions: ['product', '网脉班级数量', '会员数量', '非会员数量'],
+                source: [
+                    {product: '成都', '网脉班级数量': 6, '会员数量': 85.8, '非会员数量': 93.7},
+                    {product: '绵阳', '网脉班级数量': 83.1, '会员数量': 73.4, '非会员数量': 55.1},
+                    {product: '乐山', '网脉班级数量': 86.4, '会员数量': 65.2, '非会员数量': 82.5},
+                    {product: '宜宾', '网脉班级数量': 72.4, '会员数量': 53.9, '非会员数量': 39.1}
+                ]
+            },
+            xAxis: {type: 'category'},
+            yAxis: {},
+            // Declare several bar series, each will be mapped
+            // to a column of dataset.source by default.
+            series: [
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'}
+            ]
+        };
+        myChart1.setOption(option);
+    });
+    //更新数据
+    UpdateData();
+    function UpdateData(){
+        for(let i=0;i<schoolStatisticsArray.length;i++){
+            let schoolId1 = schoolStatisticsArray[i].schId;
+            let schcount = 0;
+            for(let z = 0; z<classArray.length; z++){
+                if(classArray[z].schId == schoolId1){
+                   schcount++
+                }
+            }
+            schoolStatisticsArray[i].schStacClassNum = schcount;
+        }
+    }
+    //表格数据显示
+    DataInforPutIn();
+    function DataInforPutIn(){
+        let schoolsheet = $("#tbody1");
+        for(let i=0;i<schoolStatisticsArray.length;i++){
+            schoolsheet.append(`<tr>
+                <td class="hidden">${schoolStatisticsArray[i].schStacId}</td>
+                <td class="hidden">${schoolStatisticsArray[i].schId}</td>
+                <td>${schoolStatisticsArray[i].schName}</td>
+                <td>${schoolStatisticsArray[i].schStacClassNum}</td>
+                <td>${schoolStatisticsArray[i].schStacVIPNum}</td>
+                <td>${schoolStatisticsArray[i].schStacNotVIPNum}</td>
+            </tr>`)
+        }
+    }
+    //城市切换
+
+    function cityswitch(){
+        let cityvalue;
+        let schoolStatisticsArray1=[];
+        $("option").each(function(index,element){
+           $("body").on("click",$(element), function () {
+               cityvalue=  $('#selectCity option:selected').val();
+               if(cityvalue == 1){
+                   for(let i=0; i<schoolStatisticsArray.length;i++){
+                       if(schoolStatisticsArray[i].cityId ==1){
+                           schoolArray.push(schoolStatisticsArray[i])
+                       }
+                   }
+                   DataInforPutIn();
+               }
+            });
+        });
+        $("select").change(function(){
+        });
+
+
+    }
+</script>
+</body>
+</html>

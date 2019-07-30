@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+
+    <!--1. 配置数据源:阿里连接池数据源  -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://47.95.113.157:3306/mytables?useUnicode=true&amp;characterEncoding=utf8" />
+        <property name="username" value="root" />
+        <property name="password" value="Mysql01." />
+    </bean>
+
+    <!--2. 配置mybatis的SqlSession的工厂: SqlSessionFactoryBean dataSource:引用数据源 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--dataSource属性指定要用到的连接池-->
+        <property name="dataSource" ref="dataSource" />
+        <!--configLocation属性指定mybatis的核心配置文件-->
+        <property name="configLocation" value="classpath:mybatis.xml" />
+        <!-- 自动扫描mapping.xml文件 -->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+
+    <!--3. 自动扫描mybatis中pojo接口包，
+           并且自动注入第二项创建的sessionfactory，初始化所有的mapper接口对象 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.sanzu.pojo" />
+    </bean>
+
+    <!--4. 扫描service注解 -->
+    <context:component-scan base-package="com.sanzu.service"/>
+
+    <!--5. 配置事务管理器  -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!--6. 开启注解进行事务管理   transaction-manager：引用上面定义的事务管理器-->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!-- Spring IOC对shiro的集成 -->
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="COOKIE_NAME" />
+        <!-- 保证该系统不会受到跨域的脚本操作攻击 -->
+        <property name="httpOnly" value="true" />
+        <!-- rememberMe 30天 -->
+        <property name="maxAge" value="2592000" />
+    </bean>
+
+    <!--配置FormAuthenticationFilter-->
+    <bean id="rememberAuthFilter" class="com.sanzu.shiro.MyFormAuthenticationFilter" />
+
+    <!-- rememberMe管理器 -->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}" />
+        <property name="cookie" ref="rememberMeCookie" />
+    </bean>
+
+    <!-- 配置ModularRealmAuthenticator，可实现多Realm认证 -->
+    <bean id="authenticator" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
+        <!-- 配置Realm认证策略 -->
+        <property name="authenticationStrategy">
+            <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"/>
+        </property>
+    </bean>
+
+    <!-- 配置自定义Realm，自定义Realm需要继承org.apache.shiro.shiro.AuthorizingRealm -->
+    <bean id="userRealm" class="com.sanzu.shiro.UserRealm">
+        <!-- 配置密码匹配器 -->
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <!-- 加密算法为MD5 -->
+                <property name="hashAlgorithmName" value="MD5"/>
+                <!-- 加密次数 -->
+                <property name="hashIterations" value="11"/>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- 配置权限管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!-- 加载上面配置好的认证策略-->
+        <property name="authenticator" ref="authenticator"/>
+        <!-- 加载自定义的认证类 -->
+        <property name="realms">
+            <list>
+                <ref bean="userRealm" />
+            </list>
+        </property>
+        <property name="rememberMeManager" ref="rememberMeManager" />
+    </bean>
+
+    <!-- Shiro生命周期处理器 -->
+    <!-- 配置lifecycleBeanPostProcessor，Shiro的生命周期管理器 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+    <!-- 启用Spring IOC容器对Shiro管理，但必须配置了lifecycleBeanPostProcessor后才可以使用 -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor" >
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+    <!-- 开启securityManager管理所有用户的安全操作,securityManager来自Spring IOC容器的配置 -->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager" />
+    </bean>
+
+    <!--
+        配置shiro过滤器,这里的id必须与web.xml中的shiroFilter filterName一致
+    -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <property name="securityManager" ref="securityManager" />
+    <property name="loginUrl" value="/login.html" />
+    <property name="successUrl" value="/index.html" />
+    <property name="unauthorizedUrl" value="/error.html" />
+    <!--
+        配置需要受保护的页面
+        以及访问这些页面需要的权限
+        1) anon  可以匿名访问的页面
+        2) authc 必须认证后才可以访问的页面
+    -->
+    <property name="filterChainDefinitions">
+        <value>
+            <!--加载静态资源-->
+            /css/** = anon
+            /fonts/** = anon
+            /images/** = anon
+            /jQueryLogin/** = anon
+            /js/** = anon
+            <!--加载不需要认证的页面-->
+            /login.html = anon
+            /login2 = anon
+            /logout = logout
+            <!--除以上配置外，其他请求全部必须认证-->
+            /index.html = rememberAuthFilter
+            /** = authc
+
+        </value>
+    </property>
+    </bean>
+
+    <!-- 加载mongodb的属性配置文件 -->
+    <context:property-placeholder location="classpath:mongodb.properties" ignore-unresolvable="true"/>
+    <!-- 定义mongo对象，对应的是mongodb官方jar包中的Mongo，replica-set设置集群副本的ip地址和端口 -->
+    <mongo:mongo id="mongo" replica-set="${mongo.hostport}">
+        <mongo:options
+                connections-per-host="${mongo.connectionsPerHost}"
+                threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+                connect-timeout="${mongo.connectTimeout}"
+                max-wait-time="${mongo.maxWaitTime}"
+                auto-connect-retry="${mongo.autoConnectRetry}"
+                socket-keep-alive="${mongo.socketKeepAlive}"
+                socket-timeout="${mongo.socketTimeout}"
+                slave-ok="${mongo.slaveOk}"
+                write-number="1"
+                write-timeout="0"
+                write-fsync="true"/>
+    </mongo:mongo>
+    <mongo:db-factory id="mgFactory"
+                      dbname="${mongo.dbname}"
+                      username="${mongo.username}"
+                      password="${mongo.password}"
+                      mongo-ref="mongo" />
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mgFactory"/>
+    </bean>
+
+
+</beans>

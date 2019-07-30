@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="css/department.css"/>
+    <link rel="stylesheet" href="css/tableStyle.css">
+</head>
+<body>
+
+<div class="container">
+    <!--<p style="font-size: 30px;display: inline-block;padding-top: 20px">部门管理</p>-->
+    <div class="col-md-12 col-xs-12"  align="left">
+        <h3>部门管理</h3>
+    </div>
+    <div class="container-fluid">
+        <div class="row" style="background:rgb(245,245,245);padding: 15px;">
+            <!--<div class="col-md-4 ">-->
+            <!--<ul class="breadcrumb ">-->
+            <!--<li><a href="#">四川网脉CRM系统</a></li>-->
+            <!--<li><a href="#">资料管理</a></li>-->
+            <!--<li class="active">部门管理</li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--<ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">-->
+            <!--...-->
+            <!--<li role="separator" class="divider">所有部门</li>-->
+            <!--<li role="separator" class="divider">市场部</li>-->
+            <!--<li role="separator" class="divider">财务部</li>-->
+            <!--<li role="separator" class="divider">行政部</li>-->
+            <!--...-->
+            <!--</ul>-->
+
+
+            <div class="input-group dropdown pull-left">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="true">
+                    所有部门
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="#">市场部</a></li>
+                    <li><a href="#">财务部</a></li>
+                    <li><a href="#">行政部</a></li>
+                    <li><a href="#">人事部</a></li>
+                    <li></li>
+                </ul>
+                <div class="input-group pull-right " id="distance">
+                    <input id="lookInput" type="text" class="form-control" placeholder="请输入...">
+                    <span class="input-group-btn">
+                                    <button id="lookUp" class="btn btn-default" type="button">Go!</button>
+                                </span>
+                </div>
+            </div>
+            <div class="pull-right" style="margin-right: 50px">
+                <button class="btn btn-primary " id="btnAddForm">增加</button>
+                <button class="btn btn-primary " id="btnEditForm">修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="width: 100%;">
+    <div class="table-responsive">
+        <table class="table " id="tableHeight" style="background: #fff">
+            <thead>
+            <tr class="">
+                <th class="hidden"></th>
+                <th><input type="checkbox" id="checkAll"/></th>
+                <th class="col-md-2 text-center">ID</th>
+                <th class="col-md-3 text-center">部门名称</th>
+                <th class="col-md-3 text-center">成立时间</th>
+                <th class="col-md-4 text-center">部门描述</th>
+            </tr>
+            </thead>
+
+            <tbody class="text-center" id="depTable">
+            </tbody>
+        </table>
+
+
+        <!--添加表单-->
+        <!--<form action="" class="form-horizontal modal fade" id="addDepartment">-->
+
+        <!--<p><label for="txtId">ID:</label><input type="text" class="form-control" id="txtId"/></p>-->
+
+        <!--<p>部门名称:<input type="text" class="form-control" id="txtdepName"/></p>-->
+
+        <!--<p>成立时间:<input type="date" class="form-control" id="txtDate"/></p>-->
+
+        <!--<p>部门描述:<input type="text" class="form-control" id="txtDescribe"/></p>-->
+
+        <!--<p>-->
+        <!--<button class="btn btn-primary" id="btnAdd" type="button">保存</button>-->
+        <!--<button class="btn btn-default" id="btnCancel">取消</button>-->
+        <!--</p>-->
+
+        <!--</form>-->
+        <div>
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title text-center" id="myModalLabel">
+                                添加新部门
+                            </h4>
+                        </div>
+
+
+                        <div class="modal-body">
+                            <form>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" class="hidden" id="message-schId">
+
+                                    <div class="form-group">
+                                        <label for="txtId" class="control-label">ID:</label>
+                                        <input type="text" class="form-control" id="txtId">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtdepName" class="control-label">部门名称:</label>
+                                        <input type="text" class="form-control" id="txtdepName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtDate" class="control-label">成立时间:</label>
+                                        <input type="date" class="form-control" id="txtDate">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtDescribe" class="control-label labFloat">部门描述:</label>
+                                        <!--<input type="text" class="form-control" id="depDescribe" required>-->
+                                        <textarea class="form-control" id="txtDescribe" cols="30" rows="10"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer addModal-footer">
+                            <button type="button" class="btn btn-primary" id="btnAdd">
+                                保存
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                关闭
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal -->
+            </div>
+
+            <!-- 修改部门对应的模态框-->
+        </div>
+
+
+        <!--修改表单-->
+
+        <form action="" class=" modal fade" id="editDepartment">
+
+            <p>部门名称:<input type="text" class="form-control" id="txtDepartment"/></p>
+
+            <p>成立时间:<input type="text" class="form-control" id="txtSetTime"/></p>
+
+            <p>部门描述:<input type="text" class="form-control" id="txtDescribe1"/></p>
+
+            <p>
+                <button class="btn btn-primary" id="btnAdd1" type="button">保存</button>
+                <button class="btn btn-default" id="btnCancel1">取消</button>
+            </p>
+        </form>
+        <!--分页-->
+        <div aria-label="Page navigation" class="ul-center text-center">
+            <ul class="pagination" id="pagePosition">
+                <li id="pagePrevious">
+            <span aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </span>
+                </li>
+                <div id="divPage" style="float: left"></div>
+                <li id="pageNext">
+            <span aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </span>
+                </li>
+            </ul>
+            <!--</ul>-->
+        </div>
+    </div>
+</div>
+<!--<div class="pull-right">-->
+<!--<button class="btn btn-primary " id="btnAddForm">增加</button>-->
+<!--<button class="btn btn-primary " id="btnEditForm">修改</button>-->
+<!--</div>-->
+
+
+<script src="js/bootstrap.min.js"></script>
+<script src="js/department.js"></script>
+
+
+</body>
+</html>
